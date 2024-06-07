@@ -1,13 +1,12 @@
 <?php
 
-function adicionarFilme(string $nomeFilme, int $anoLancamento, float $nota, string $genero): array
+function adicionarFilme(string $nomeFilme, int $anoLancamento, float $nota, string $genero): Filme
 {
-    $filme = [
-        "nome" => $nomeFilme,
-        "ano" => $anoLancamento,
-        "nota" => $nota,
-        "genero" => $genero
-    ];
+    $filme = new Filme();
+    $filme->nome = $nomeFilme;
+    $filme->anoLancamento = $anoLancamento;
+    $filme->nota = $nota;
+    $filme->genero = $genero;
 
     return $filme;
 }
