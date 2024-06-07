@@ -1,5 +1,7 @@
 <?php
 
+require __DIR__ . '/src/functions.php';
+
 echo "Bem vindo(a) ao screen match \n";
 
 $nomeFilme = "Velozes e Furiosos";
@@ -17,20 +19,13 @@ for($i = 1; $i < $argc; $i++) {
 $notaFilme = array_sum($notas) / $totalNotasFilme;
 
 $planoPrime = true;
-$incluidoNoPlano = $planoPrime || $anoLancamento < 2020;
+$incluidoNoPlano = filmeIncluidoNoPlano($planoPrime, $anoLancamento);
 
 echo "Nome do filme: " . $nomeFilme . "\n";
 echo "Nota do filme: $notaFilme \n";
 echo "ano de Lançamento: $anoLancamento \n";
 
-if($anoLancamento > 2022) {
-    echo "Esse filme é lançamento \n";
-} elseif($anoLancamento > 2020 && $anoLancamento < 2022) {
-    echo "Esse filme ainda é novo \n";
-} else {
-    echo "Esse filme nao é lançamento \n";
-}
-
+exibirMensagemLancamento($anoLancamento);
 
 $generoFilme = match($nomeFilme) {
     "Velozes e Furiosos" => "açao",
@@ -41,9 +36,12 @@ $generoFilme = match($nomeFilme) {
 
 echo "O genero do filme é $generoFilme \n";
 
-$filme = [
-    "nome" => "O auto da compadecida",
-    "ano" => "2002",
-    "nota" => 9.8,
-    "genero" => "comedia"
-];
+$filme = adicionarFilme(
+    nomeFilme: "O auto da compadecida", 
+    anoLancamento: 2002, 
+    nota: 9.8, 
+    genero: "comedia"
+);
+
+$filmeEmJSON = json_encode($filme);
+file_put_contents(__DIR__ . "/filmes.json", $filmeEmJSON);
